@@ -1,0 +1,39 @@
+# PayPal express checkout
+
+cocorico_paypal_set_express_checkout:
+    path:     /paypal/ec/set
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\ExpressCheckout:set }
+    options: { i18n: false }
+
+cocorico_paypal_get_express_checkout_details:
+    path:     /paypal/ec/get-details/{token}
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\ExpressCheckout:getDetails }
+    requirements:
+        token: '[-\w]+'
+    options: { i18n: false }
+
+cocorico_paypal_do_express_checkout:
+    path:     /paypal/ec/do
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\ExpressCheckout:do }
+    options: { i18n: false }
+
+# PayPal mass pay
+
+cocorico_paypal_mass_pay:
+    path:     /paypal/mp/pay
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\MassPayments:pay }
+    options: { i18n: false }
+
+# PayPal adaptive payments
+
+cocorico_paypal_ap_pay:
+    path:     /paypal/ap/pay
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\AdaptivePayments:pay }
+    options: { i18n: false }
+
+cocorico_paypal_ap_payyment_details:
+    path:     /paypal/ap/payment-details/{paykey}
+    defaults: { _controller: CocoricoPaymentBundle:PayPal\AdaptivePayments:getPaymentDetails }
+    requirements:
+        paykey: '[-\w]+'
+    options: { i18n: false }

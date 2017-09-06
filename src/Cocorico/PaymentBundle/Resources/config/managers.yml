@@ -1,0 +1,6 @@
+services:
+    #    paypal payment detail manager
+    cocorico.payment.paypal.payment_detail_manager:
+        class: Cocorico\PaymentBundle\Manager\PayPal\PaymentDetailManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
