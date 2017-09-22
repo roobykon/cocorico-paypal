@@ -30,7 +30,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root_passwd
       - MYSQL_USER=cocorico_u
-      - MYSQL_PASSWORD=cocorico_paaswd
+      - MYSQL_PASSWORD=cocorico_passwd
       - MYSQL_DATABASE=cocorico_db
 
   mongodb:
