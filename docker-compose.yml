@@ -1,0 +1,64 @@
+version: '2'
+
+services:
+  web:
+    image: roobykon/cocorico_pp:test1
+    container_name: cocorico-web
+    hostname: web
+    domainname: example.local
+    network_mode: bridge
+    ports:
+      - 80:80
+    links:
+      - mysql:mysql
+      - mongodb:mongo
+      - mail:mail
+    volumes:
+      - ./data/web/data:/var/www/html
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:5.7.19
+    container_name: cocorico-mysql
+    hostname: mysql
+    domainname: example.local
+    network_mode: bridge
+    volumes:
+      - ./conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./data/mysql/data/:/var/lib/mysql/
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_passwd
+      - MYSQL_USER=cocorico_u
+      - MYSQL_PASSWORD=cocorico_paaswd
+      - MYSQL_DATABASE=cocorico_db
+
+  mongodb:
+    image: mongo:3.4.7
+    container_name: cocorico-mongodb
+    hostname: mongo
+    domainname: example.local 
+    network_mode: bridge
+    volumes:
+      - ./data/mongo/data/:/data/db/
+    restart: unless-stopped
+
+  mail:
+    image: namshi/smtp
+    container_name: cocorico-mail
+    hostname: mail
+    domainname: example.local
+    network_mode: bridge
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:4.3.1-standalone
+    container_name: cocorico-adminer
+    hostname: adminer
+    domainname: example.local
+    network_mode: bridge
+    ports:
+      - 8080:8080
+    links:
+      - mysql:mysql
+    restart: unless-stopped
