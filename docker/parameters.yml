@@ -1,0 +1,53 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: mysql
+    database_port: null
+    database_name: cocorico_db
+    database_user: cocorico_u
+    database_password: cocorico_passwd
+    mongodb_server: mongo
+    mongodb_database_name: mongo_db
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    use_assetic_controller: false
+    cocorico.assets_base_urls: 'http://cocorico.local'
+    router.request_context.host: cocorico.local
+    router.request_context.scheme: http
+    router.request_context.base_url: ''
+    cocorico.admin: admin
+    cocorico.admin_translation: false
+    cocorico.translator.client.id: null
+    cocorico.translator.secret.key: null
+    cocorico.facebook.app_id: 125968024798195
+    cocorico.facebook.secret: c164abeca4153ed04b8ca9e373d89ec4
+    cocorico.image_driver: imagick
+    cocorico.google_analytics: UA-64445856-1
+    cocorico.google_tag_manager: false
+    cocorico_geo.google_place_api_key: null
+    cocorico_geo.google_place_server_api_key: null
+    cocorico_geo.ipinfodb_api_key: null
+    cocorico.deploy.host: cocorico.local
+    cocorico.deploy.dir: /var/www/html/web
+    cocorico.deploy.user: fakeuser
+    cocorico.booking.expiration_delay: 2880
+    cocorico.booking.alert_expiration_delay: 120
+    cocorico.booking.alert_imminent_delay: 1440
+    cocorico.booking.validated_moment: start
+    cocorico.booking.validated_delay: 0
+    cocorico.bankwire_checking_simulation: false
+    cocorico_sms.enabled: false
+    cocorico_sms.ovh_endpoint_name: ovh-eu
+    cocorico_sms.ovh_application_key: 'Application Key'
+    cocorico_sms.ovh_application_secret: 'Application Secret'
+    cocorico_sms.ovh_consumer_key: 'Consumer Key'
+    cocorico_sms.ovh_service_name: 'Service Name'
+    cocorico_sms.ovh_debug: false
+    cocorico.paypal.account1.application_id: APP-80W284485P519543T    
+    cocorico.paypal.account1.username: 'Account username'    
+    cocorico.paypal.account1.password: 'Account password'    
+    cocorico.paypal.account1.signature: 'Account signature'
+    cocorico.paypal.mode: sandbox
