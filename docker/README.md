@@ -1,6 +1,6 @@
 1. docker-compose up -d
 2. docker exec [web_container_name] post-install.sh install
-3. get facebook api & google api (https://github.com/Cocolabs-SAS/cocorico)
+3. get facebook api & google api (https://github.com/Cocolabs-SAS/cocorico)</br>
 3.1 edit in ./conf/parameters.yml next parameters  
 database_host:  
 database_port:  
