@@ -5,7 +5,7 @@ parameters:
     database_name: cocorico_db
     database_user: cocorico_u
     database_password: cocorico_passwd
-    mongodb_server: mongo
+    mongodb_server: mongodb://mongo:27017
     mongodb_database_name: mongo_db
     mailer_transport: smtp
     mailer_host: 127.0.0.1
