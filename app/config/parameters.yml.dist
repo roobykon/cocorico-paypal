@@ -122,6 +122,12 @@ parameters:
         cocorico.paypal.account1.username: eugene.gichko-facilitator_api1.roobykon.com
         cocorico.paypal.account1.password: CJDEBWYC4PMYBBLT
         cocorico.paypal.account1.signature: AFcWxV21C7fd0v3bYYYRCpSSRl31A0Xh9AlIueAlGiGPodzfijMN2nu0
+        cocorico.paypal.express_checkout.return_url: null
+        cocorico.paypal.express_checkout.cancel_url: null
+        cocorico.paypal.express_checkout.notify_url: null
+        cocorico.paypal.adaptive_payments.return_url: null
+        cocorico.paypal.adaptive_payments.cancel_url: null
+        cocorico.paypal.adaptive_payments.error_language: en
 
     ################################# Locales #################################
 

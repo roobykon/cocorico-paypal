@@ -4,6 +4,7 @@ namespace Cocorico\PaymentBundle\Service\PayPal;
 
 use Cocorico\PaymentBundle\Enum\PayPal\Ack;
 use Cocorico\PaymentBundle\Enum\PayPal\Command;
+use Cocorico\PaymentBundle\Enum\PayPal\ErrorLanguage;
 use Cocorico\PaymentBundle\Enum\PayPal\PaymentAction;
 use Monolog\Logger;
 use PayPal\CoreComponentTypes\BasicAmountType;
@@ -21,6 +22,7 @@ use PayPal\PayPalAPI\SetExpressCheckoutRequestType;
 use PayPal\Service\PayPalAPIInterfaceServiceService;
 use PayPal\Types\AP\Receiver;
 use PayPal\Types\AP\ReceiverList;
+use Cocorico\PaymentBundle\Enum\PayPal\Mode;
 
 /**
  * Class ExpressCheckout
@@ -28,12 +30,13 @@ use PayPal\Types\AP\ReceiverList;
  */
 class ExpressCheckout
 {
-    const REDIRECT_URL = 'https://www.sandbox.paypal.com/webscr?cmd={cmd}&token={token}';
+    const SANDBOX_REDIRECT_URL = 'https://www.sandbox.paypal.com/webscr?cmd={cmd}&token={token}';
+    const LIVE_REDIRECT_URL = 'https://www.paypal.com/webscr?cmd={cmd}&token={token}';
 
     /**
      * @var PayPalAPIInterfaceServiceService
      */
-    protected $service;
+    protected $sdk;
 
     /**
      * @var Logger
@@ -41,17 +44,27 @@ class ExpressCheckout
     private $logger;
 
     /**
-     * @var String
+     * @var string
+     */
+    protected $error_language = ErrorLanguage::EN_US;
+
+    /**
+     * @var string
+     */
+    protected $mode = Mode::SANDBOX;
+
+    /**
+     * @var string
      */
     private $return_url;
 
     /**
-     * @var String
+     * @var string
      */
     private $cancel_url;
 
     /**
-     * @var String
+     * @var string
      */
     private $notify_url = '';
 
@@ -59,11 +72,13 @@ class ExpressCheckout
      * PayPal constructor.
      * @param PayPalAPIInterfaceServiceService $service
      * @param Logger $logger
+     * @param array $config
      */
-    public function __construct(Logger $logger, PayPalAPIInterfaceServiceService $service)
+    public function __construct(Logger $logger, PayPalAPIInterfaceServiceService $service, array $config)
     {
-        $this->service = $service;
+        $this->sdk = $service;
         $this->logger = $logger;
+        $this->setConfig($config);
     }
 
     /**
@@ -71,9 +86,27 @@ class ExpressCheckout
      */
     public function setConfig(array $config)
     {
-        $this->return_url = $config['return_url'];
-        $this->cancel_url = $config['cancel_url'];
-        $this->notify_url = $config['notify_url'];
+        $params = [
+            'mode' => function ($mode) {
+                return Mode::isAvailable($mode);
+            },
+            'return_url' => null,
+            'cancel_url' => null,
+            'error_language' => function ($language) {
+                return ErrorLanguage::isAvailableLanguage($language);
+            },
+        ];
+
+
+        foreach ($params as $param => $validator) {
+            switch (true) {
+                case empty($config[$param]);
+                case is_callable($validator) && !call_user_func($validator, $config[$param]);
+                    continue 2;
+                default:
+                    $this->$param = $config[$param];
+            }
+        }
     }
 
     /**
@@ -114,7 +147,7 @@ class ExpressCheckout
         $request = new SetExpressCheckoutReq();
         $request->SetExpressCheckoutRequest = $request_type;
 
-        return $this->service->SetExpressCheckout($request);
+        return $this->sdk->SetExpressCheckout($request);
     }
 
     /**
@@ -138,7 +171,7 @@ class ExpressCheckout
         $payment_details = $this->createPaymentDetailsType($order);
         $request = $this->createDoExpressCheckoutPaymentRequest($token, $payer_id, $payment_details);
         try {
-            return $this->service->DoExpressCheckoutPayment($request);
+            return $this->sdk->DoExpressCheckoutPayment($request);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
@@ -156,7 +189,7 @@ class ExpressCheckout
         $getExpressCheckoutReq = new GetExpressCheckoutDetailsReq();
         $getExpressCheckoutReq->GetExpressCheckoutDetailsRequest = $getExpressCheckoutDetailsRequest;
         try {
-            return $this->service->GetExpressCheckoutDetails($getExpressCheckoutReq);
+            return $this->sdk->GetExpressCheckoutDetails($getExpressCheckoutReq);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
@@ -194,7 +227,9 @@ class ExpressCheckout
      */
     public function getRedirectUrl($token)
     {
-        return $this->collectRedirectUrl(self::REDIRECT_URL, [
+        $url = $this->mode == Mode::LIVE ? self::LIVE_REDIRECT_URL : self::SANDBOX_REDIRECT_URL;
+
+        return $this->collectRedirectUrl($url, [
             '{cmd}' => Command::EXPRESS_CHECKOUT,
             '{token}' => $token,
         ]);

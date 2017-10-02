@@ -7,10 +7,10 @@ services:
         arguments: [%paypal%]
     cocorico_paypal_ec:
         class: Cocorico\PaymentBundle\Service\PayPal\ExpressCheckout
-        arguments: ['@logger', '@cocorico_paypal_api_sdk']
+        arguments: ['@logger', '@cocorico_paypal_api_sdk', %paypal_express_checkout%]
     cocorico_paypal_mp:
         class: Cocorico\PaymentBundle\Service\PayPal\MassPayments
         arguments: ['@logger', '@cocorico_paypal_api_sdk']
     cocorico_paypal_ap:
         class: Cocorico\PaymentBundle\Service\PayPal\AdaptivePayments
-        arguments: ['@logger', '@cocorico_paypal_adaptive_payment_sdk']
+        arguments: ['@logger', '@cocorico_paypal_adaptive_payment_sdk', %paypal_adaptive_payments%]

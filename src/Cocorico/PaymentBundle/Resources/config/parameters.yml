@@ -1,0 +1,17 @@
+parameters:
+    paypal:
+        mode: %cocorico.paypal.mode%
+        acct1.AppId: %cocorico.paypal.account_1.application_id%
+        acct1.UserName: %cocorico.paypal.account_1.username%
+        acct1.Password: %cocorico.paypal.account_1.password%
+        acct1.Signature: %cocorico.paypal.account_1.signature%
+    paypal_express_checkout:
+        mode: %cocorico.paypal.mode%
+        return_url: %cocorico.paypal.express_checkout.return_url%
+        cancel_url: %cocorico.paypal.express_checkout.cancel_url%
+        notify_url: %cocorico.paypal.express_checkout.notify_url%
+    paypal_adaptive_payments:
+        mode: %cocorico.paypal.mode%
+        return_url: %cocorico.paypal.adaptive_payments.return_url%
+        cancel_url: %cocorico.paypal.adaptive_payments.cancel_url%
+        error_language: %cocorico.paypal.adaptive_payments.error_language%

@@ -25,12 +25,7 @@ class CocoricoPaymentExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('managers.yml');
-
-        $definition = $container->getDefinition('cocorico_paypal_ec');
-        $definition->addMethodCall('setConfig', [$config['paypal_ec']]);
-
-        $definition = $container->getDefinition('cocorico_paypal_ap');
-        $definition->addMethodCall('setConfig', [$config['paypal_ap']]);
+        $loader->load('parameters.yml');
     }
 
 }

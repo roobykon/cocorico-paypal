@@ -101,20 +101,3 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
-
-cocorico_payment:
-    paypal_ec:
-        return_url: http://127.0.0.1:8000/paypal/ec/do
-        cancel_url: http://127.0.0.1:8000/paypal/cancel
-        notify_url: https://requestb.in/wxzb0ywx
-    paypal_ap:
-        return_url: http://127.0.0.1:8000/paypal/ap/pay?success=1
-        cancel_url: http://127.0.0.1:8000/paypal/ap/pay?success=0
-
-parameters:
-    paypal:
-        mode: sandbox
-        acct1.AppId: APP-80W284485P519543T
-        acct1.UserName: merchant.account_api2.cocorico.com
-        acct1.Password: 762F5MU8UBJBT2QV
-        acct1.Signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AxUsPPwk2qWEpYUC.EfuzCHfvKSh

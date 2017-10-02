@@ -6,6 +6,7 @@ use Cocorico\PaymentBundle\Enum\PayPal\Ack;
 use Cocorico\PaymentBundle\Enum\PayPal\ActionType;
 use Cocorico\PaymentBundle\Enum\PayPal\Command;
 use Cocorico\PaymentBundle\Enum\PayPal\ErrorLanguage;
+use Cocorico\PaymentBundle\Enum\PayPal\Mode;
 use Monolog\Logger;
 use PayPal\Service\AdaptivePaymentsService;
 use PayPal\Types\AP\PaymentDetailsRequest;
@@ -21,12 +22,13 @@ use PayPal\Types\Common\ResponseEnvelope;
  */
 class AdaptivePayments
 {
-    const REDIRECT_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd={cmd}&paykey={paykey}';
+    const SANDBOX_REDIRECT_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd={cmd}&paykey={paykey}';
+    const LIVE_REDIRECT_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd={cmd}&paykey={paykey}';
 
     /**
      * @var AdaptivePaymentsService
      */
-    protected $service;
+    protected $sdk;
 
     /**
      * @var Logger
@@ -34,17 +36,22 @@ class AdaptivePayments
     private $logger;
 
     /**
-     * @var String
+     * @var string
      */
-    private $error_language = ErrorLanguage::EN_US;
+    protected $error_language = ErrorLanguage::EN_US;
 
     /**
-     * @var String
+     * @var string
+     */
+    protected $mode = Mode::SANDBOX;
+
+    /**
+     * @var string
      */
     private $return_url;
 
     /**
-     * @var String
+     * @var string
      */
     private $cancel_url;
 
@@ -52,11 +59,13 @@ class AdaptivePayments
      * AdaptivePayments constructor.
      * @param Logger $logger
      * @param AdaptivePaymentsService $service
+     * @param array $config
      */
-    public function __construct(Logger $logger, AdaptivePaymentsService $service)
+    public function __construct(Logger $logger, AdaptivePaymentsService $service, array $config)
     {
-        $this->service = $service;
+        $this->sdk = $service;
         $this->logger = $logger;
+        $this->setConfig($config);
     }
 
     /**
@@ -64,11 +73,26 @@ class AdaptivePayments
      */
     public function setConfig(array $config)
     {
-        $this->return_url = $config['return_url'];
-        $this->cancel_url = $config['cancel_url'];
+        $params = [
+            'mode' => function ($mode) {
+                return Mode::isAvailable($mode);
+            },
+            'return_url' => null,
+            'cancel_url' => null,
+            'error_language' => function ($language) {
+                return ErrorLanguage::isAvailableLanguage($language);
+            },
+        ];
 
-        if (!empty($config['error_language']) && ErrorLanguage::isAvailableLanguage($config['error_language'])) {
-            $this->error_language = $config['error_language'];
+
+        foreach ($params as $param => $validator) {
+            switch (true) {
+                case empty($config[$param]);
+                case is_callable($validator) && !call_user_func($validator, $config[$param]);
+                    continue 2;
+                default:
+                    $this->$param = $config[$param];
+            }
         }
     }
 
@@ -84,7 +108,7 @@ class AdaptivePayments
         $request = $this->createPayRequest(ActionType::PAY, $currency_code, $receivers, $return_url, $cancel_url);
 
         try {
-            return $this->service->Pay($request);
+            return $this->sdk->Pay($request);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
@@ -154,7 +178,7 @@ class AdaptivePayments
     {
         $request = $this->createPaymentDetailsRequest($pay_key);
         try {
-            return $this->service->PaymentDetails($request);
+            return $this->sdk->PaymentDetails($request);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
@@ -168,7 +192,9 @@ class AdaptivePayments
      */
     public function getRedirectUrl($paykey)
     {
-        return $this->collectRedirectUrl(self::REDIRECT_URL, [
+        $url = $this->mode === Mode::LIVE ? self::LIVE_REDIRECT_URL: self::SANDBOX_REDIRECT_URL;
+
+        return $this->collectRedirectUrl($url, [
             '{cmd}' => Command::AP_PAYMENT,
             '{paykey}' => $paykey,
         ]);

@@ -46,8 +46,15 @@ parameters:
     cocorico_sms.ovh_consumer_key: 'Consumer Key'
     cocorico_sms.ovh_service_name: 'Service Name'
     cocorico_sms.ovh_debug: false
-    cocorico.paypal.account1.application_id: APP-80W284485P519543T    
-    cocorico.paypal.account1.username: 'Account username'    
-    cocorico.paypal.account1.password: 'Account password'    
-    cocorico.paypal.account1.signature: 'Account signature'
     cocorico.paypal.mode: sandbox
+    cocorico.paypal.account_1.application_id: APP-80W284485P519543T
+    cocorico.paypal.account_1.username: null
+    cocorico.paypal.account_1.password: null
+    cocorico.paypal.account_1.signature: null
+    cocorico.paypal.receiver: null
+    cocorico.paypal.express_checkout.return_url: null
+    cocorico.paypal.express_checkout.cancel_url: null
+    cocorico.paypal.express_checkout.notify_url: null
+    cocorico.paypal.adaptive_payments.return_url: null
+    cocorico.paypal.adaptive_payments.cancel_url: null
+    cocorico.paypal.adaptive_payments.error_language: en
