@@ -91,6 +91,16 @@ parameters:
     ##Set to false in prod env
     cocorico.bankwire_checking_simulation: false
 
+    ################################# OVH Telecom #################################
+
+        cocorico_sms.enabled: false
+        cocorico_sms.ovh_endpoint_name:      "ovh-eu"
+        cocorico_sms.ovh_application_key:    "Application Key"
+        cocorico_sms.ovh_application_secret: "Application Secret"
+        cocorico_sms.ovh_consumer_key:       "Consumer Key"
+        cocorico_sms.ovh_service_name:       "Service Name"
+        cocorico_sms.ovh_debug: false
+
     ################################# General Info #################################
 
         cocorico.site_name: Cocorico
@@ -104,15 +114,9 @@ parameters:
         cocorico.webmaster_email: webmaster@cocorico.io
         cocorico.vat_number: FR 12 123 456 789
 
-    ################################# OVH Telecom #################################
+    ################################# Common links #################################
 
-        cocorico_sms.enabled: false
-        cocorico_sms.ovh_endpoint_name:      "ovh-eu"
-        cocorico_sms.ovh_application_key:    "Application Key"
-        cocorico_sms.ovh_application_secret: "Application Secret"
-        cocorico_sms.ovh_consumer_key:       "Consumer Key"
-        cocorico_sms.ovh_service_name:       "Service Name"
-        cocorico_sms.ovh_debug: false
+        cocorico.links.credits: https://roobykon.com/solution/marketplace
 
     ################################# Payments #################################
 

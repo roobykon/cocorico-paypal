@@ -31,6 +31,7 @@ twig:
         cocorico_contact_mail_obfuscated: "%cocorico.contact_mail_obfuscated%"
         cocorico_from_email: "%cocorico.from_email%"
         cocorico_vat_number: "%cocorico.vat_number%"
+        cocorico_link_credits: "%cocorico.links.credits%"
         cocorico_facebook_id: "%cocorico.facebook.app_id%"
         cocorico_google_analytics: "%cocorico.google_analytics%"
         cocorico_google_tag_manager: "%cocorico.google_tag_manager%"
