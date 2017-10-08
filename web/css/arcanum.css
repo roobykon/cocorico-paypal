@@ -1,0 +1,93 @@
+#wrapper {
+  height: 100vh;
+  overflow-y: scroll;
+}
+.col-cropped {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.badge {
+  display: inline-block;
+  padding: .25em .4em;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+  letter-spacing: -0.7px;
+}
+.badge-success {
+  background-color: #5cb85c;
+}
+.badge-info {
+  background-color: #5bc0de;
+}
+.badge-danger {
+  background-color: #d9534f;
+}
+.wrapper-arcanum-parameters .panel-title {
+  line-height: 18px;
+  letter-spacing: -2px;
+  font-weight: 300;
+  font-size: 28px;
+  text-decoration: underline;
+}
+.wrapper-arcanum-parameters .arcanum-parameters-filter {
+  position: relative;
+}
+.wrapper-arcanum-parameters .arcanum-parameters-filter .fa-filter {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-size: 22px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.wrapper-arcanum-parameters .arcanum-parameters-filter input {
+  margin-bottom: 12px;
+  padding-left: 28px;
+  line-height: 28px;
+}
+.wrapper-arcanum-parameters .arcanum-parameters-actions .btn {
+  padding: 2px 8px;
+  font-weight: 300;
+}
+.wrapper-arcanum-parameters .arcanum-parameters-actions .btn > i {
+  margin-right: 4px;
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-parameter {
+  line-height: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value {
+  position: relative;
+  width: calc(100% - 32px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value span {
+  line-height: 24px;
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value span.modified {
+  font-weight: 700;
+  color: rgba(0, 0, 225, 0.7);
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value input {
+  height: 24px;
+  padding: 0 4px;
+  line-height: 24px;
+  border: none;
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: 300;
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value .arcanum-value-actions {
+  position: absolute;
+  top: 0;
+  right: -32px;
+}
+.wrapper-arcanum-parameters .wrapper-arcanum-parameter .arcanum-value .arcanum-value-actions > .fa {
+  line-height: 24px;
+  cursor: pointer;
+}

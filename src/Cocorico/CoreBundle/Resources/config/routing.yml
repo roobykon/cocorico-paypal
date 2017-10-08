@@ -1,3 +1,8 @@
+cocorico_core_arcanum:
+    resource: @CocoricoCoreBundle/Controller/Arcanum
+    type:     annotation
+    options: { i18n: false }
+
 cocorico_core_frontend:
     resource: "@CocoricoCoreBundle/Controller/Frontend"
     type:     annotation
